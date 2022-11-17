@@ -4,14 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Login {
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Login");
-        frame.setContentPane(new Login().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);}
+public class Login extends JFrame {
 
     private JTextField EmailField;
     private JTextField PasswordField;
@@ -21,31 +14,46 @@ public class Login {
     private JLabel Email;
     private JLabel Title;
     private JLabel Icon;
-    private JPanel panel1;
-
-    public JPanel getPanel() {
-        return panel1;
-    }
-
-    public void setPanel1(JPanel panel1) {
-        this.panel1 = panel1;
-    }
+    private JPanel loginPanel;
 
     public Login() {
+        setContentPane(loginPanel);
+        setTitle("Login");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setSize(300, 200);
+
+
         loginButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
-
+            MainPage main = new MainPage();
+            setVisible(false);
             }
 
+        });
+
+        signUpButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                SignUpPage signup = new SignUpPage();
+                setVisible(false);
+            }
 
         });
 
     }
 
+    public static void main(String[] args) {
+        Login loginpage = new Login();
     }
+
+
+    }
+
 
 
