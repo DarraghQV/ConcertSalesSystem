@@ -8,10 +8,12 @@ public class Performers {
 
     private String Agent;
 
+    private String PerformerName;
     private int Fee;
 
-    public Performers(int PerformerID, String Agent, int Fee) {
+    public Performers(int PerformerID, String PerformerName, String Agent, int Fee) {
         setPerformerID(PerformerID);
+        setPerformerName(PerformerName);
         setAgent(Agent);
         setFee(Fee);
     }
@@ -24,12 +26,20 @@ public class Performers {
         this.PerformerID = PerformerID;
     }
 
+    public String getPerformerName() {
+        return PerformerName;
+    }
+
+    public void setPerformerName(String PerformerName) {
+        this.PerformerName = PerformerName;
+    }
+
     public String getAgent() {
         return Agent;
     }
 
     public void setAgent(String Agent) {
-        this.Agent = this.Agent;
+        this.Agent = Agent;
     }
 
     public int getFee() {
@@ -41,6 +51,6 @@ public class Performers {
     }
 
     public String toString() {
-        return "Ticket ID: " + getPerformerID() + "  Type: " + getAgent() + "  Concert: " + getFee();
+        return "Performer ID: " + getPerformerID() + "  Performer: " + getPerformerName() + "  Type: " + getAgent() + "  Concert: " + getFee();
     }
 }
