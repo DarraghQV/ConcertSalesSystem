@@ -158,6 +158,41 @@ public class MainPage extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(null, allPerformerData.toString());
     }
 
+    public static void removePerformer(ArrayList<Performers> allPerformers) {
+
+        ArrayList<Performers> foundPerformers = new ArrayList<Performers>();
+        String searchKey = JOptionPane.showInputDialog("Please enter the name of the product you wish to remove");
+
+        for (Performers all : allPerformers)
+            if (all.getPerformerName().toLowerCase().contains(searchKey.toLowerCase()))
+                foundPerformers.add(all);
+
+        String text = "";
+
+        for (Performers all : foundPerformers)
+            if (all != null) {
+                text += all + "\n";
+            }
+
+        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following products matched your search phrase\n\n" + text +
+                "\n\nPlease enter the id of the one you want to remove"));
+
+        Performers performerToRemove = null;
+
+        for (Performers all : foundPerformers)
+            if (all != null && all.getPerformerID() == searchID)
+                performerToRemove = all;
+
+        int removeChoice = JOptionPane.showConfirmDialog(null, "The details of the product you wish to amend are:\n\n" +
+                performerToRemove + "\n\nAre you sure you wish to remove this product?", "Product Removal Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (removeChoice == JOptionPane.YES_OPTION) {
+            allPerformers.remove(performerToRemove);
+            JOptionPane.showMessageDialog(null, "Product now removed from array list!",
+                    "Product Removed", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
     public void scheduleConcert() {
 
         int ConcertID = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Concert ID"));
@@ -171,6 +206,41 @@ public class MainPage extends JFrame implements ActionListener {
                 "Concert Scheduled", JOptionPane.INFORMATION_MESSAGE);
 
 
+    }
+
+    public static void cancelConcert(ArrayList<Concerts> allConcerts) {
+
+        ArrayList<Concerts> foundConcerts = new ArrayList<Concerts>();
+        String searchKey = JOptionPane.showInputDialog("Please enter the venue of the Concert you would like to remove");
+
+        for (Concerts all : allConcerts)
+            if (all.getVenue().toLowerCase().contains(searchKey.toLowerCase()))
+                foundConcerts.add(all);
+
+        String text = "";
+
+        for (Concerts all : foundConcerts)
+            if (all != null) {
+                text += all + "\n";
+            }
+
+        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following concerts matched your search\n\n" + text +
+                "\n\nPlease enter the ID of the one you want to remove"));
+
+        Concerts concertsToRemove = null;
+
+        for (Concerts all : foundConcerts)
+            if (all != null && all.getConcertID() == searchID)
+                concertsToRemove = all;
+
+        int removeChoice = JOptionPane.showConfirmDialog(null, "The details of the concert you would like to cancel are are:\n\n" +
+                concertsToRemove + "\n\nAre you sure you wish to cancel this concert?", "Concert Cancellation Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (removeChoice == JOptionPane.YES_OPTION) {
+            allConcerts.remove(concertsToRemove);
+            JOptionPane.showMessageDialog(null, "Concert now removed from array list!",
+                    "Concert Removed", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public void viewConcerts(ArrayList<Concerts>allConcerts) {
@@ -196,7 +266,8 @@ public class MainPage extends JFrame implements ActionListener {
             addPerformers();
         if (e.getActionCommand().equals("Update Performer"));
 
-        if (e.getActionCommand().equals("Remove Performer"));
+        if (e.getActionCommand().equals("Remove Performer"))
+            removePerformer(allPerformers);
 
         if (e.getActionCommand().equals("View Performer"))
             viewPerformers(allPerformers);
@@ -208,6 +279,7 @@ public class MainPage extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("View Concert"))
             viewConcerts(allConcerts);
         if (e.getActionCommand().equals("Cancel Concert"))
+            cancelConcert(allConcerts);
 
 
 
