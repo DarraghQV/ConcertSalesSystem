@@ -161,7 +161,7 @@ public class MainPage extends JFrame implements ActionListener {
     public static void removePerformer(ArrayList<Performers> allPerformers) {
 
         ArrayList<Performers> foundPerformers = new ArrayList<Performers>();
-        String searchKey = JOptionPane.showInputDialog("Please enter the name of the product you wish to remove");
+        String searchKey = JOptionPane.showInputDialog("Please enter the name of the performer you wish to remove");
 
         for (Performers all : allPerformers)
             if (all.getPerformerName().toLowerCase().contains(searchKey.toLowerCase()))
@@ -174,7 +174,7 @@ public class MainPage extends JFrame implements ActionListener {
                 text += all + "\n";
             }
 
-        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following products matched your search phrase\n\n" + text +
+        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following performers matched your search\n\n" + text +
                 "\n\nPlease enter the id of the one you want to remove"));
 
         Performers performerToRemove = null;
@@ -183,13 +183,13 @@ public class MainPage extends JFrame implements ActionListener {
             if (all != null && all.getPerformerID() == searchID)
                 performerToRemove = all;
 
-        int removeChoice = JOptionPane.showConfirmDialog(null, "The details of the product you wish to amend are:\n\n" +
-                performerToRemove + "\n\nAre you sure you wish to remove this product?", "Product Removal Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+        int removeChoice = JOptionPane.showConfirmDialog(null, "The details of the performer you wish to remove are:\n\n" +
+                performerToRemove + "\n\nAre you sure you wish to remove this performer?", "Performer Removal Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
 
         if (removeChoice == JOptionPane.YES_OPTION) {
             allPerformers.remove(performerToRemove);
-            JOptionPane.showMessageDialog(null, "Product now removed from array list!",
-                    "Product Removed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Performer now removed from array list!",
+                    "Performer Removed", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
