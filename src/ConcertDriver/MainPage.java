@@ -13,11 +13,13 @@ public class MainPage extends JFrame implements ActionListener {
     JMenuItem item=null;
 
     public MainPage(){
-        setTitle("Sign Up");
+        setTitle("Main Title");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setSize(400, 400);
         setContentPane(panelMain);
+        setLocationRelativeTo(null);
+        setResizable(false);
 
         createFileMenu();
         createPerformerMenu();
@@ -31,7 +33,7 @@ public class MainPage extends JFrame implements ActionListener {
         menuBar.add(performerMenu);
         menuBar.add(concertMenu);
         menuBar.add(salesMenu);
-        menuBar.add(salesMenu);
+        menuBar.add(adminMenu);
 
     }
 

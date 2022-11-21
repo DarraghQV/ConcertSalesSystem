@@ -22,6 +22,8 @@ public class SignUpPage extends JFrame {
         setVisible(true);
         setSize(400, 400);
         setContentPane(panelSign);
+        setLocationRelativeTo(null);
+        setResizable(false);
 
 
     }

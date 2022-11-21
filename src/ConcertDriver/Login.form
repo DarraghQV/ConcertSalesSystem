@@ -8,6 +8,11 @@
     <properties>
       <background color="-8745830"/>
       <enabled value="true"/>
+      <focusCycleRoot value="false"/>
+      <maximumSize width="400" height="100"/>
+      <minimumSize width="400" height="100"/>
+      <preferredSize width="400" height="100"/>
+      <toolTipText value=""/>
     </properties>
     <border type="bevel-lowered" title="Login Screen">
       <font/>
@@ -34,22 +39,24 @@
           <text value="Ticket Pro"/>
         </properties>
       </component>
-      <component id="ff11a" class="javax.swing.JLabel" binding="Email">
+      <component id="ff11a" class="javax.swing.JLabel" binding="Name">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <foreground color="-16777216"/>
-          <text value="Email"/>
+          <text value="Name"/>
         </properties>
       </component>
-      <component id="8a334" class="javax.swing.JTextField" binding="EmailField">
+      <component id="8a334" class="javax.swing.JTextField" binding="NameField">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="14" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <toolTipText value="Please enter your name."/>
+        </properties>
       </component>
       <component id="d03a3" class="javax.swing.JTextField" binding="PasswordField">
         <constraints>
@@ -57,7 +64,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <toolTipText value="Please enter your password."/>
+        </properties>
       </component>
       <component id="8e00e" class="javax.swing.JLabel" binding="Password">
         <constraints>
