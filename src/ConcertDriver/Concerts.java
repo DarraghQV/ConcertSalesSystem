@@ -1,6 +1,8 @@
 package ConcertDriver;
 
-public class Concerts {
+import java.io.Serializable;
+
+public class Concerts implements Serializable {
 
     private int ConcertID;
 

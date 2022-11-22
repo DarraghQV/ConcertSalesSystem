@@ -3,9 +3,12 @@ package ConcertDriver;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+
+import static java.nio.file.Files.createFile;
 
 public class MainPage extends JFrame implements ActionListener {
 
@@ -17,16 +20,18 @@ public class MainPage extends JFrame implements ActionListener {
     JMenuItem item = null;
 
     Performers p1 = new Performers(1, "Foo Fighters", "Balogne Man", 10000);
-    Concerts c1 = new Concerts(1, "husfduf", "Killarney");
-
     Sale s1 = new Sale(100, "Foo Fighters", "Billy Joe", "BillyJoe@gmail.com");
 
 
 
     ArrayList<Performers> allPerformers = new ArrayList<>(Arrays.asList(p1));
-    ArrayList<Concerts> allConcerts = new ArrayList<>(Arrays.asList(c1));
+    ArrayList<Concerts> allConcerts = new ArrayList<>();
+
 
     ArrayList<Sale> allSales = new ArrayList<>(Arrays.asList(s1));
+
+    private final File concertFile = new File("concertData.data");
+
 
 
     public MainPage() {
@@ -63,7 +68,7 @@ public class MainPage extends JFrame implements ActionListener {
 
         fileMenu = new JMenu("File");
 
-        String FunctionNames[] = {"New", "Open", "Save", "Quit"};
+        String FunctionNames[] = {"New File", "Open File", "Save File", "Quit"};
 
         for (int i = 0; i < FunctionNames.length; i++) {
             item = new JMenuItem(FunctionNames[i]);
@@ -130,6 +135,120 @@ public class MainPage extends JFrame implements ActionListener {
             item = new JMenuItem(FunctionNames[i]);
             item.addActionListener(this);
             adminMenu.add(item);
+        }
+    }
+
+
+    public void makeFile() {
+
+        if(!concertFile.exists()) //if the file doesn't already exist, create it
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(concertFile);
+                JOptionPane.showMessageDialog(null, "Created a new file to store concert details!",
+                        "New File", JOptionPane.INFORMATION_MESSAGE);
+                fileOutputStream.close();
+            } catch (FileNotFoundException fnfe) {
+                fnfe.printStackTrace();
+                JOptionPane.showMessageDialog(null, "File could not be found!",
+                        "Problem Finding File!", JOptionPane.ERROR_MESSAGE);
+            }
+            catch (IOException ioe) {
+                ioe.printStackTrace();
+                JOptionPane.showMessageDialog(null, "File could not be opened!",
+                        "Problem Opening the File!", JOptionPane.ERROR_MESSAGE);
+            }
+
+        else
+            JOptionPane.showMessageDialog(null, "File to store concert details already exists!",
+                    "New File", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void openFile() {
+
+        ObjectInputStream objectInputStream=null;
+
+        if(!concertFile.exists())
+            makeFile();
+        else {
+            try {
+                FileInputStream fileInputStream = new FileInputStream(concertFile);
+
+                if(concertFile.length()!= 0){
+                    objectInputStream = new ObjectInputStream(fileInputStream);
+                    JOptionPane.showMessageDialog(null, "Opened the file that stores concert details",
+                            "Opened File", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Can't read file as it is empty!",
+                            "Empty File", JOptionPane.ERROR_MESSAGE);
+            }
+            catch (IOException ioe) {
+                ioe.printStackTrace();
+                JOptionPane.showMessageDialog(null, "File could not be opened!",
+                        "Problem Opening the File!", JOptionPane.ERROR_MESSAGE);
+            }
+
+            if(objectInputStream==null)
+                return;
+
+            try{
+                ArrayList<Concerts> allConcerts = null;
+
+                allConcerts = (ArrayList<Concerts>) objectInputStream.readObject();
+
+                System.out.println(allConcerts);
+
+                String concertData="";
+
+                if(allConcerts!=null)
+                    for(Concerts concert: allConcerts)
+                        concertData+=concert + "\n";
+
+                objectInputStream.close();
+
+                JOptionPane.showMessageDialog(null, "Details of bicycles read from file are:\n\n" + concertData,
+                        "Opened File", JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch (IOException ioe) {
+                ioe.printStackTrace();
+                JOptionPane.showMessageDialog(null, "File could not be read!",
+                        "Problem Reading From File!", JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException cnfe) {
+                cnfe.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Could not find the appropriate class!",
+                        "Problem Finding the Class!", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }
+
+    public void saveFile() {
+        if (!concertFile.exists())
+            makeFile();
+
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(concertFile);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            Concerts c1 = new Concerts(1, "Foo Fighters", "Killarney");
+
+            Concerts c2 = new Concerts(2, "Aerosmith", "Tralee");
+
+            ArrayList<Concerts> allConcerts = new ArrayList<>();
+            allConcerts.add(c1);
+            allConcerts.add(c2);
+
+            objectOutputStream.writeObject(allConcerts);
+            objectOutputStream.close();
+            JOptionPane.showMessageDialog(null, "Saved the file that stores concert details",
+                    "Saved File", JOptionPane.INFORMATION_MESSAGE);
+        } catch (FileNotFoundException fnfe) {
+            System.out.println(fnfe.getStackTrace());
+            JOptionPane.showMessageDialog(null, "File could not be found!",
+                    "Problem Finding File!", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ioe) {
+            System.out.println(ioe.getStackTrace());
+            JOptionPane.showMessageDialog(null, "File could not be written!",
+                    "Problem Writing to File!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -298,6 +417,16 @@ public class MainPage extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (e.getActionCommand().equals("New File"))
+            makeFile();
+        if (e.getActionCommand().equals("Open File"))
+            openFile();
+        if (e.getActionCommand().equals("Save File"))
+            saveFile();
+        if (e.getActionCommand().equals("Quit")){
+            JOptionPane.showMessageDialog(null, "Session ending. Thank you!");
+                    System.exit(0);}
+
         // Performers Functions
 
         if (e.getActionCommand().equals("Add Performer"))
@@ -330,6 +459,7 @@ public class MainPage extends JFrame implements ActionListener {
             viewSale(allSales);
 
     }
+
 
 }
 
