@@ -43,6 +43,6 @@ public class Concerts {
 
 
     public String toString() {
-        return "Concert ID: " + getConcertID() + "  Performer: " + getArtistName() + "  Venue: " + getVenue();
+        return "\nConcert ID: " + getConcertID() + "\nPerformer: " + getArtistName() + "\nVenue: " + getVenue();
     }
 }

@@ -9,8 +9,9 @@ import java.util.Iterator;
 
 public class MainPage extends JFrame implements ActionListener {
 
-    private JLabel IconMain;
     private JPanel panelMain;
+    private JLabel MainIcon;
+    private JTextArea textArea1;
 
     JMenu fileMenu, performerMenu, concertMenu, salesMenu, adminMenu;
     JMenuItem item = null;
@@ -18,9 +19,14 @@ public class MainPage extends JFrame implements ActionListener {
     Performers p1 = new Performers(1, "Foo Fighters", "Balogne Man", 10000);
     Concerts c1 = new Concerts(1, "husfduf", "Killarney");
 
+    Sale s1 = new Sale(100, "Foo Fighters", "Billy Joe", "BillyJoe@gmail.com");
+
+
 
     ArrayList<Performers> allPerformers = new ArrayList<>(Arrays.asList(p1));
     ArrayList<Concerts> allConcerts = new ArrayList<>(Arrays.asList(c1));
+
+    ArrayList<Sale> allSales = new ArrayList<>(Arrays.asList(s1));
 
 
     public MainPage() {
@@ -257,6 +263,38 @@ public class MainPage extends JFrame implements ActionListener {
         }
         JOptionPane.showMessageDialog(null, allConcertData);
     }
+
+    public void processSale() {
+
+        int SaleAmount = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Sale Amount"));
+        String TicketType = JOptionPane.showInputDialog("Please enter what concert the Ticket is for");
+        String CustomerName = JOptionPane.showInputDialog("Please enter the Customer name");
+        String CustomerEmail = JOptionPane.showInputDialog("Please enter the Customer email");
+
+        Sale s = new Sale(SaleAmount, TicketType, CustomerName, CustomerEmail);
+
+        allSales.add(s);
+        JOptionPane.showMessageDialog(null, "Sale now added to array list!",
+                "Product Added", JOptionPane.INFORMATION_MESSAGE);
+
+
+    }
+
+    public void viewSale(ArrayList<Sale>allSales) {
+
+        String allSaleData = "";
+        Sale sale;
+
+        Iterator<Sale> iterator = allSales.iterator();
+
+        while (iterator.hasNext()) {
+            sale = iterator.next();
+            if (sale != null)
+                allSaleData += sale + "\n\n";
+        }
+        JOptionPane.showMessageDialog(null, allSaleData);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -273,7 +311,6 @@ public class MainPage extends JFrame implements ActionListener {
             viewPerformers(allPerformers);
 
         // Concert Functions
-
         if (e.getActionCommand().equals("Schedule Concert"))
             scheduleConcert();
         if (e.getActionCommand().equals("View Concert"))
@@ -284,9 +321,13 @@ public class MainPage extends JFrame implements ActionListener {
 
 
         // Sales Functions
-        if (e.getActionCommand().equals("Process Sale"));
-
-        if (e.getActionCommand().equals("View Sale"));
+        if (e.getActionCommand().equals("Process Sale"))
+            processSale();
+        if (e.getActionCommand().equals("Refund Sale"))
+            JOptionPane.showMessageDialog(null, "Our refund policy: there is no refunds.");
+        // Marks for comedy?
+        if (e.getActionCommand().equals("View Sale"))
+            viewSale(allSales);
 
     }
 

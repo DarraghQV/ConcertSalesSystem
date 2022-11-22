@@ -51,6 +51,6 @@ public class Performers {
     }
 
     public String toString() {
-        return "Performer ID: " + getPerformerID() + "  Performer: " + getPerformerName() + "  Type: " + getAgent() + "  Concert: " + getFee();
+        return "\nPerformer ID: " + getPerformerID() + "\nPerformer: " + getPerformerName() + "\nType: " + getAgent() + "\nConcert: " + getFee();
     }
 }
