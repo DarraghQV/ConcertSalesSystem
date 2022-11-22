@@ -20,13 +20,13 @@ public class MainPage extends JFrame implements ActionListener {
     JMenuItem item = null;
 
     Performers p1 = new Performers(1, "Foo Fighters", "Balogne Man", 10000);
+
+    ArrayList<Concerts> allConcerts = new ArrayList<>();
     Sale s1 = new Sale(100, "Foo Fighters", "Billy Joe", "BillyJoe@gmail.com");
 
 
 
     ArrayList<Performers> allPerformers = new ArrayList<>(Arrays.asList(p1));
-    ArrayList<Concerts> allConcerts = new ArrayList<>();
-
 
     ArrayList<Sale> allSales = new ArrayList<>(Arrays.asList(s1));
 
@@ -232,8 +232,6 @@ public class MainPage extends JFrame implements ActionListener {
             Concerts c1 = new Concerts(1, "Foo Fighters", "Killarney");
 
             Concerts c2 = new Concerts(2, "Aerosmith", "Tralee");
-
-            ArrayList<Concerts> allConcerts = new ArrayList<>();
             allConcerts.add(c1);
             allConcerts.add(c2);
 
