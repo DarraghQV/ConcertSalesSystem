@@ -41,17 +41,6 @@ public class Login extends JFrame {
 
         });
 
-        signUpButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                SignUpPage signup = new SignUpPage();
-                setVisible(false);
-            }
-
-        });
-
     }
 
 
