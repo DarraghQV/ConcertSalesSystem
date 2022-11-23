@@ -14,7 +14,6 @@ public class MainPage extends JFrame implements ActionListener {
 
     private JPanel panelMain;
     private JLabel MainIcon;
-    private JTextArea textArea1;
 
     JMenu fileMenu, performerMenu, concertMenu, salesMenu, adminMenu;
     JMenuItem item = null;
