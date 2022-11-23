@@ -231,8 +231,7 @@ public class MainPage extends JFrame implements ActionListener {
     }
 
     public void saveFile() {
-        if (!concertFile.exists())
-            makeFile();
+        if (!concertFile.exists());
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(concertFile);
