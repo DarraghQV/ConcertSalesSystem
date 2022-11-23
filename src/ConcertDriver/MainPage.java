@@ -19,18 +19,26 @@ public class MainPage extends JFrame implements ActionListener {
     JMenu fileMenu, performerMenu, concertMenu, salesMenu, adminMenu;
     JMenuItem item = null;
 
-    Performers p1 = new Performers(1, "Foo Fighters", "Balogne Man", 10000);
+    Performers p1 = new Performers(1, "Foo Fighters", "Musashi Miyamoto", 10000);
 
-    ArrayList<Concerts> allConcerts = new ArrayList<>();
+    Performers p2 = new Performers(2, "Aerosmith", "Neo", 5000);
+
+
     Sale s1 = new Sale(100, "Foo Fighters", "Billy Joe", "BillyJoe@gmail.com");
 
+    Concerts c1 = new Concerts(1, "Foo Fighters", "Killarney");
+
+    Concerts c2 = new Concerts(2, "Aerosmith", "Tralee");
+
+    ArrayList<Concerts> allConcerts = new ArrayList<Concerts>(Arrays.asList(c1,c2));
 
 
-    ArrayList<Performers> allPerformers = new ArrayList<>(Arrays.asList(p1));
+    ArrayList<Performers> allPerformers = new ArrayList<>(Arrays.asList(p1,p2));
 
     ArrayList<Sale> allSales = new ArrayList<>(Arrays.asList(s1));
 
     private final File concertFile = new File("concertData.data");
+
 
 
 
@@ -141,8 +149,9 @@ public class MainPage extends JFrame implements ActionListener {
 
     public void makeFile() {
 
-        if(!concertFile.exists()) //if the file doesn't already exist, create it
+        if(concertFile.exists()) //if the file doesn't already exist, create it
             try {
+                final File concertFile = new File("concertData.data");
                 FileOutputStream fileOutputStream = new FileOutputStream(concertFile);
                 JOptionPane.showMessageDialog(null, "Created a new file to store concert details!",
                         "New File", JOptionPane.INFORMATION_MESSAGE);
@@ -167,8 +176,7 @@ public class MainPage extends JFrame implements ActionListener {
 
         ObjectInputStream objectInputStream=null;
 
-        if(!concertFile.exists())
-            makeFile();
+        if(!concertFile.exists());
         else {
             try {
                 FileInputStream fileInputStream = new FileInputStream(concertFile);
@@ -206,7 +214,7 @@ public class MainPage extends JFrame implements ActionListener {
 
                 objectInputStream.close();
 
-                JOptionPane.showMessageDialog(null, "Details of bicycles read from file are:\n\n" + concertData,
+                JOptionPane.showMessageDialog(null, "Details of concerts read from the file are:\n\n" + concertData,
                         "Opened File", JOptionPane.INFORMATION_MESSAGE);
             }
             catch (IOException ioe) {
@@ -229,11 +237,6 @@ public class MainPage extends JFrame implements ActionListener {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(concertFile);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            Concerts c1 = new Concerts(1, "Foo Fighters", "Killarney");
-
-            Concerts c2 = new Concerts(2, "Aerosmith", "Tralee");
-            allConcerts.add(c1);
-            allConcerts.add(c2);
 
             objectOutputStream.writeObject(allConcerts);
             objectOutputStream.close();
