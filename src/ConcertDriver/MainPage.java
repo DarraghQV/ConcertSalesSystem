@@ -236,21 +236,6 @@ public class MainPage extends JFrame implements ActionListener {
         }
     }
 
-    public void addPerformers() {
-
-        int PerformerID = Integer.parseInt(JOptionPane.showInputDialog("Please enter the PerformerID"));
-        String PerformerName = JOptionPane.showInputDialog("Please enter the Performer name");
-        String Agent = JOptionPane.showInputDialog("Please enter the Agent name");
-        int Fee = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Performer's fee"));
-
-        Performers p = new Performers(PerformerID, PerformerName, Agent, Fee);
-
-        allPerformers.add(p);
-        JOptionPane.showMessageDialog(null, "Performer now added to array list!",
-                "Product Added", JOptionPane.INFORMATION_MESSAGE);
-
-
-    }
 
     public static boolean isDigit(String searchIDasString){
 
@@ -259,7 +244,6 @@ public class MainPage extends JFrame implements ActionListener {
         for (int i = 0; i < searchIDasString.length(); i++) {
 
             if(!Character.isDigit(searchIDasString.charAt(i))){
-                JOptionPane.showMessageDialog(null, "This is not a digit.");
                 isValid = false;
                 break;
             }
@@ -270,6 +254,56 @@ public class MainPage extends JFrame implements ActionListener {
         return isValid;
 
     }
+
+    public void addPerformers() {
+
+        String PerformerIDAsString = JOptionPane.showInputDialog("Please enter the PerformerID");
+        if (PerformerIDAsString != null) {
+            while (PerformerIDAsString.isEmpty() || !isDigit(PerformerIDAsString)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                PerformerIDAsString = JOptionPane.showInputDialog(null, "Please enter the PerformerID");
+            }
+        }
+        int PerformerID = Integer.parseInt(PerformerIDAsString);
+
+        String PerformerName = JOptionPane.showInputDialog("Please enter the Performer name");
+        if (PerformerName != null) {
+            while (PerformerName.isEmpty() || isDigit(PerformerName)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                PerformerName = JOptionPane.showInputDialog(null, "Please enter the Performer name");
+            }
+        }
+
+
+        String Agent = JOptionPane.showInputDialog("Please enter the Agent name");
+        if (Agent != null) {
+            while (Agent.isEmpty() || isDigit(Agent)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                Agent = JOptionPane.showInputDialog(null, "Please enter the Agent name");
+            }
+        }
+
+        String FeeAsString = JOptionPane.showInputDialog("Please enter the Performer's fee");
+
+        if (FeeAsString != null) {
+            while (FeeAsString.isEmpty() || !isDigit(FeeAsString)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+
+                FeeAsString = JOptionPane.showInputDialog(null, "Please enter the Performer's fee");
+            }
+            int Fee = Integer.parseInt(FeeAsString);
+            Performers p = new Performers(PerformerID, PerformerName, Agent, Fee);
+
+            allPerformers.add(p);
+            JOptionPane.showMessageDialog(null, "Performer now added to array list!",
+                    "Product Added", JOptionPane.INFORMATION_MESSAGE);
+
+
+        }
+    }
+
+
+
     public void viewPerformers(ArrayList<Performers>allPerformers) {
 
         String allPerformerData = "";
@@ -285,10 +319,16 @@ public class MainPage extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(null, allPerformerData.toString());
     }
 
-    public static void updatePerformer(ArrayList<Performers> allPerformers) {
+    public void updatePerformer(ArrayList<Performers> allPerformers) {
 
         ArrayList<Performers> foundPerformers = new ArrayList<Performers>();
         String searchKey = JOptionPane.showInputDialog("Please enter the name of the performer you wish to update");
+        if (searchKey != null) {
+            while (searchKey.isEmpty() || isDigit(searchKey)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                searchKey = JOptionPane.showInputDialog(null, "Please enter the name of the performer you wish to update");
+            }
+        }
 
         for (Performers all : allPerformers)
             if (all.getPerformerName().toLowerCase().contains(searchKey.toLowerCase()))
@@ -301,8 +341,18 @@ public class MainPage extends JFrame implements ActionListener {
                 text += all + "\n";
             }
 
-        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following performers matched your search\n\n" + text +
-                "\n\nPlease enter the id of the one you want to update"));
+
+        String searchIDasString = JOptionPane.showInputDialog("The following performers matched your search\n\n" + text +
+                "\n\nPlease enter the id of the one you want to remove");
+
+        if(searchIDasString != null) {
+            while (searchIDasString.isEmpty() || !isDigit(searchIDasString)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                searchIDasString = JOptionPane.showInputDialog("The following performers matched your search\n\n" + text +
+                        "\n\nPlease enter the id of the one you want to remove");
+            }
+        }
+        int searchID = Integer.parseInt(searchIDasString);
 
         Performers performerToRemove = null;
 
@@ -317,80 +367,142 @@ public class MainPage extends JFrame implements ActionListener {
             allPerformers.remove(performerToRemove);
 
 
-
-            int PerformerID = Integer.parseInt(JOptionPane.showInputDialog("Please enter the PerformerID"));
-            if(PerformerID != null) {
-                while (PerformerIDasString.isEmpty() || !isDigit(PerformerID)) {
-                    PerformerID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the PerformerID");
+            String PerformerIDAsString = JOptionPane.showInputDialog("Please enter the PerformerID");
+            if (PerformerIDAsString != null) {
+                while (PerformerIDAsString.isEmpty() || !isDigit(PerformerIDAsString)) {
+                    JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                    PerformerIDAsString = JOptionPane.showInputDialog(null, "Please enter the PerformerID");
                 }
-                int searchID = Integer.parseInt(PerformerID);
+            }
+                int PerformerID = Integer.parseInt(PerformerIDAsString);
 
                 String PerformerName = JOptionPane.showInputDialog("Please enter the Performer name");
-            String Agent = JOptionPane.showInputDialog("Please enter the Agent name");
-            int Fee = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Performer's fee"));
+                if (PerformerName != null) {
+                    while (PerformerName.isEmpty() || isDigit(PerformerName)) {
+                        JOptionPane.showMessageDialog(null, "Please enter field again.");
+                        PerformerName = JOptionPane.showInputDialog(null, "Please enter the Performer name");
+                    }
+                }
 
-            Performers p = new Performers(PerformerID, PerformerName, Agent, Fee);
 
-            allPerformers.add(p);
-            JOptionPane.showMessageDialog(null, "Performer now added to array list!",
-                    "Product Added", JOptionPane.INFORMATION_MESSAGE);
+                String Agent = JOptionPane.showInputDialog("Please enter the Agent name");
+            if (Agent!= null) {
+                while (Agent.isEmpty() || isDigit(Agent)) {
+                    JOptionPane.showMessageDialog(null, "Please enter field again.");
+                    Agent = JOptionPane.showInputDialog(null, "Please enter the Agent name");
+                }
+            }
 
+                String FeeAsString = JOptionPane.showInputDialog("Please enter the Performer's fee");
+
+                if (FeeAsString != null) {
+                    while (FeeAsString.isEmpty() || !isDigit(FeeAsString)) {
+                        JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+
+                        FeeAsString = JOptionPane.showInputDialog(null, "Please enter the Performer's fee");
+                    }
+                    int Fee = Integer.parseInt(FeeAsString);
+
+                    Performers p = new Performers(PerformerID, PerformerName, Agent, Fee);
+
+                    allPerformers.add(p);
+                    JOptionPane.showMessageDialog(null, "Performer now added to array list!",
+                            "Product Added", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            }
         }
-    }
 
-    public static void removePerformer(ArrayList<Performers> allPerformers) {
+
+    public void removePerformer(ArrayList<Performers> allPerformers) {
 
         ArrayList<Performers> foundPerformers = new ArrayList<Performers>();
         String searchKey = JOptionPane.showInputDialog("Please enter the name of the Performer you wish to remove:");
+        if (searchKey != null) {
+            while (searchKey.isEmpty() || isDigit(searchKey)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                searchKey = JOptionPane.showInputDialog(null, "Please enter the name of the performer you wish to update");
+            }
+        }
 
 
+        for (Performers all : allPerformers)
+            if (all.getPerformerName().toLowerCase().contains(searchKey.toLowerCase()))
+                foundPerformers.add(all);
 
-            for (Performers all : allPerformers)
-                if (all.getPerformerName().toLowerCase().contains(searchKey.toLowerCase()))
-                    foundPerformers.add(all);
+        String text = "";
 
-            String text = "";
-
-            for (Performers all : foundPerformers)
-                if (all != null) {
-                    text += all + "\n";
-                }
+        for (Performers all : foundPerformers)
+            if (all != null) {
+                text += all + "\n";
+            }
 
 
         String searchIDasString = JOptionPane.showInputDialog("The following performers matched your search\n\n" + text +
                 "\n\nPlease enter the id of the one you want to remove");
 
-            if(searchIDasString != null) {
-                while (searchIDasString.isEmpty() || !isDigit(searchIDasString)) {
-                    searchIDasString = JOptionPane.showInputDialog("The following performers matched your search\n\n" + text +
-                            "\n\nPlease enter the id of the one you want to remove");
-                }
-                int searchID = Integer.parseInt(searchIDasString);
-
-                Performers performerToRemove = null;
-
-                for (Performers all : foundPerformers)
-                    if (all != null && all.getPerformerID() == searchID)
-                        performerToRemove = all;
-
-                int removeChoice = JOptionPane.showConfirmDialog(null, "The details of the performer you wish to remove are:\n\n" +
-                        performerToRemove + "\n\nAre you sure you wish to remove this performer?", "Performer Removal Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
-
-                if (removeChoice == JOptionPane.YES_OPTION) {
-                    allPerformers.remove(performerToRemove);
-                    JOptionPane.showMessageDialog(null, "Performer now removed from array list!",
-                            "Performer Removed", JOptionPane.INFORMATION_MESSAGE);
+        if (searchIDasString != null) {
+            while (searchIDasString.isEmpty() || !isDigit(searchIDasString)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                searchIDasString = JOptionPane.showInputDialog("The following performers matched your search\n\n" + text +
+                        "\n\nPlease enter the id of the one you want to remove");
             }
+        }
+        int searchID = Integer.parseInt(searchIDasString);
+
+        Performers performerToRemove = null;
+
+        for (Performers all : foundPerformers)
+            if (all != null && all.getPerformerID() == searchID)
+                performerToRemove = all;
+
+        int removeChoice = JOptionPane.showConfirmDialog(null, "The details of the performer you wish to remove are:\n\n" +
+                performerToRemove + "\nAre you sure you wish to remove this performer?", "Performer Removal Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (removeChoice == JOptionPane.YES_OPTION) {
+            allPerformers.remove(performerToRemove);
+            JOptionPane.showMessageDialog(null, "Performer now removed from array list!",
+                    "Performer Removed", JOptionPane.INFORMATION_MESSAGE);
+        }
+        if (removeChoice == JOptionPane.NO_OPTION) {
+            removeChoice = JOptionPane.showConfirmDialog(null, "The details of the performer you wish to remove are:\n\n" +
+                    performerToRemove + "\nAre you sure you wish to remove this performer?", "Performer Removal Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+        }
+        if (removeChoice == JOptionPane.CANCEL_OPTION) {
+            JOptionPane.showMessageDialog(null, "Returning to Main Page.");
+            System.exit(0);
+            new MainPage();
 
         }
-        }
+    }
 
 
     public void scheduleConcert() {
 
-        int ConcertID = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Concert ID"));
+        String ConcertIDasString = JOptionPane.showInputDialog("Please enter the Concert ID");
+        if(ConcertIDasString != null) {
+            while (ConcertIDasString.isEmpty() || !isDigit(ConcertIDasString)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                ConcertIDasString = JOptionPane.showInputDialog("Please enter the Concert ID");
+            }
+        }
+            int ConcertID = Integer.parseInt(ConcertIDasString);
+
         String ArtistName = JOptionPane.showInputDialog("Please enter the Performer name");
+        if (ArtistName != null) {
+            while (ArtistName.isEmpty() || isDigit(ArtistName)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                ArtistName = JOptionPane.showInputDialog(null, "Please enter the Performer name");
+            }
+        }
+
         String Venue = JOptionPane.showInputDialog("Please enter the Venue name");
+        if (Venue != null) {
+            while (Venue.isEmpty() || isDigit(Venue)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                Venue = JOptionPane.showInputDialog(null, "Please enter the Venue name");
+            }
+        }
 
         Concerts c = new Concerts(ConcertID, ArtistName, Venue);
 
@@ -406,6 +518,13 @@ public class MainPage extends JFrame implements ActionListener {
         ArrayList<Concerts> foundConcerts = new ArrayList<Concerts>();
         String searchKey = JOptionPane.showInputDialog("Please enter the venue of the Concert you would like to remove");
 
+        if (searchKey != null) {
+            while (searchKey.isEmpty() || !isDigit(searchKey)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                searchKey = JOptionPane.showInputDialog("Please enter the venue of the Concert you would like to remove");
+            }
+        }
+
         for (Concerts all : allConcerts)
             if (all.getVenue().toLowerCase().contains(searchKey.toLowerCase()))
                 foundConcerts.add(all);
@@ -417,8 +536,17 @@ public class MainPage extends JFrame implements ActionListener {
                 text += all + "\n";
             }
 
-        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following concerts matched your search\n\n" + text +
-                "\n\nPlease enter the ID of the one you want to update"));
+        String searchIDasString = JOptionPane.showInputDialog("The following concerts matched your search\n\n" + text +
+                "\n\nPlease enter the id of the one you want to update");
+
+        if (searchIDasString != null) {
+            while (searchIDasString.isEmpty() || !isDigit(searchIDasString)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                searchIDasString = JOptionPane.showInputDialog("The concerts performers matched your search\n\n" + text +
+                        "\n\nPlease enter the id of the one you want to update");
+            }
+        }
+        int searchID = Integer.parseInt(searchIDasString);
 
         Concerts concertsToRemove = null;
 
@@ -432,9 +560,30 @@ public class MainPage extends JFrame implements ActionListener {
         if (removeChoice == JOptionPane.YES_OPTION) {
             allConcerts.remove(concertsToRemove);
 
-            int ConcertID = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Concert ID"));
+            String ConcertIDasString = JOptionPane.showInputDialog("Please enter the Concert ID");
+            if(ConcertIDasString != null) {
+                while (ConcertIDasString.isEmpty() || !isDigit(ConcertIDasString)) {
+                    JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                    ConcertIDasString = JOptionPane.showInputDialog("Please enter the Concert ID");
+                }
+            }
+            int ConcertID = Integer.parseInt(ConcertIDasString);
+
             String ArtistName = JOptionPane.showInputDialog("Please enter the Performer name");
+            if (ArtistName != null) {
+                while (ArtistName.isEmpty() || isDigit(ArtistName)) {
+                    JOptionPane.showMessageDialog(null, "Please enter field again.");
+                    ArtistName = JOptionPane.showInputDialog(null, "Please enter the Performer name");
+                }
+            }
+
             String Venue = JOptionPane.showInputDialog("Please enter the Venue name");
+            if (Venue != null) {
+                while (Venue.isEmpty() || isDigit(Venue)) {
+                    JOptionPane.showMessageDialog(null, "Please enter field again.");
+                    Venue = JOptionPane.showInputDialog(null, "Please enter the Venue name");
+                }
+            }
 
             Concerts c = new Concerts(ConcertID, ArtistName, Venue);
 
@@ -448,6 +597,12 @@ public class MainPage extends JFrame implements ActionListener {
 
         ArrayList<Concerts> foundConcerts = new ArrayList<Concerts>();
         String searchKey = JOptionPane.showInputDialog("Please enter the venue of the Concert you would like to remove");
+        if (searchKey != null) {
+            while (searchKey.isEmpty() || !isDigit(searchKey)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                searchKey = JOptionPane.showInputDialog("Please enter the venue of the Concert you would like to remove");
+            }
+        }
 
         for (Concerts all : allConcerts)
             if (all.getVenue().toLowerCase().contains(searchKey.toLowerCase()))
@@ -460,8 +615,17 @@ public class MainPage extends JFrame implements ActionListener {
                 text += all + "\n";
             }
 
-        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following concerts matched your search\n\n" + text +
-                "\n\nPlease enter the ID of the one you want to remove"));
+        String searchIDasString = JOptionPane.showInputDialog("The following concerts matched your search\n\n" + text +
+                "\n\nPlease enter the id of the one you want to update");
+
+        if (searchIDasString != null) {
+            while (searchIDasString.isEmpty() || !isDigit(searchIDasString)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                searchIDasString = JOptionPane.showInputDialog("The concerts performers matched your search\n\n" + text +
+                        "\n\nPlease enter the id of the one you want to update");
+            }
+        }
+        int searchID = Integer.parseInt(searchIDasString);
 
         Concerts concertsToRemove = null;
 
@@ -496,10 +660,39 @@ public class MainPage extends JFrame implements ActionListener {
 
     public void processSale() {
 
-        int SaleAmount = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Sale Amount"));
+        String SaleAmountAsString = JOptionPane.showInputDialog("Please enter the Sale Amount");
+        if (SaleAmountAsString != null) {
+            while (SaleAmountAsString.isEmpty() || !isDigit(SaleAmountAsString)) {
+                JOptionPane.showMessageDialog(null, "Not a digit. Please enter field again.");
+                SaleAmountAsString = JOptionPane.showInputDialog("Please enter the Sale Amount");
+            }
+        }
+        int SaleAmount = Integer.parseInt(SaleAmountAsString);
+
+
         String TicketType = JOptionPane.showInputDialog("Please enter what concert the Ticket is for");
+        if (TicketType != null) {
+            while (TicketType.isEmpty() || isDigit(TicketType)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                TicketType = JOptionPane.showInputDialog(null, "Please enter what concert the Ticket is for");
+            }
+        }
+
         String CustomerName = JOptionPane.showInputDialog("Please enter the Customer name");
+        if (CustomerName != null) {
+            while (CustomerName.isEmpty() || isDigit(CustomerName)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                CustomerName = JOptionPane.showInputDialog(null, "Please enter the Customer name");
+            }
+        }
+
         String CustomerEmail = JOptionPane.showInputDialog("Please enter the Customer email");
+        if (CustomerEmail != null) {
+            while (CustomerEmail.isEmpty() || isDigit(CustomerEmail)) {
+                JOptionPane.showMessageDialog(null, "Please enter field again.");
+                CustomerEmail = JOptionPane.showInputDialog(null, "Please enter the Customer email");
+            }
+        }
 
         Sale s = new Sale(SaleAmount, TicketType, CustomerName, CustomerEmail);
 
@@ -574,5 +767,3 @@ public class MainPage extends JFrame implements ActionListener {
 
 
 }
-
-// Lab Sheet 11 used as reference for functions
