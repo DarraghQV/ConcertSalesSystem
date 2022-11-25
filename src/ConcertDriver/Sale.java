@@ -1,6 +1,8 @@
 package ConcertDriver;
 
 public class Sale {
+
+
     private int SaleAmount;
 
     private String TicketType;
