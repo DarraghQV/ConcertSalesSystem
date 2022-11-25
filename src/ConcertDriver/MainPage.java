@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.awt.*;
 
 import static java.nio.file.Files.createFile;
 
@@ -45,7 +46,7 @@ public class MainPage extends JFrame implements ActionListener {
         setTitle("Main Title");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        setSize(400, 400);
+        setSize(600, 700);
         setContentPane(panelMain);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -54,7 +55,6 @@ public class MainPage extends JFrame implements ActionListener {
         createPerformerMenu();
         createConcertMenu();
         createSalesMenu();
-        createAdminMenu();
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -62,7 +62,7 @@ public class MainPage extends JFrame implements ActionListener {
         menuBar.add(performerMenu);
         menuBar.add(concertMenu);
         menuBar.add(salesMenu);
-        menuBar.add(adminMenu);
+        menuBar.setBackground(Color.WHITE);
 
     }
 
@@ -131,19 +131,6 @@ public class MainPage extends JFrame implements ActionListener {
         }
     }
 
-    private void createAdminMenu() {
-
-        adminMenu = new JMenu("Admin");
-
-        String FunctionNames[] = {"Generate Revenue Analysis", "Generate Commission Report", "x"};
-
-        for (int i = 0; i < FunctionNames.length; i++) {
-
-            item = new JMenuItem(FunctionNames[i]);
-            item.addActionListener(this);
-            adminMenu.add(item);
-        }
-    }
 
 
     public void makeFile() {
@@ -282,6 +269,51 @@ public class MainPage extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(null, allPerformerData.toString());
     }
 
+    public static void updatePerformer(ArrayList<Performers> allPerformers) {
+
+        ArrayList<Performers> foundPerformers = new ArrayList<Performers>();
+        String searchKey = JOptionPane.showInputDialog("Please enter the name of the performer you wish to update");
+
+        for (Performers all : allPerformers)
+            if (all.getPerformerName().toLowerCase().contains(searchKey.toLowerCase()))
+                foundPerformers.add(all);
+
+        String text = "";
+
+        for (Performers all : foundPerformers)
+            if (all != null) {
+                text += all + "\n";
+            }
+
+        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following performers matched your search\n\n" + text +
+                "\n\nPlease enter the id of the one you want to update"));
+
+        Performers performerToRemove = null;
+
+        for (Performers all : foundPerformers)
+            if (all != null && all.getPerformerID() == searchID)
+                performerToRemove = all;
+
+        int removeChoice = JOptionPane.showConfirmDialog(null, "The details of the performer you wish to remove are:\n\n" +
+                performerToRemove + "\n\nAre you sure you wish to update this performer?", "Performer Update Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (removeChoice == JOptionPane.YES_OPTION) {
+            allPerformers.remove(performerToRemove);
+
+            int PerformerID = Integer.parseInt(JOptionPane.showInputDialog("Please enter the PerformerID"));
+            String PerformerName = JOptionPane.showInputDialog("Please enter the Performer name");
+            String Agent = JOptionPane.showInputDialog("Please enter the Agent name");
+            int Fee = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Performer's fee"));
+
+            Performers p = new Performers(PerformerID, PerformerName, Agent, Fee);
+
+            allPerformers.add(p);
+            JOptionPane.showMessageDialog(null, "Performer now added to array list!",
+                    "Product Added", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+    }
+
     public static void removePerformer(ArrayList<Performers> allPerformers) {
 
         ArrayList<Performers> foundPerformers = new ArrayList<Performers>();
@@ -330,6 +362,49 @@ public class MainPage extends JFrame implements ActionListener {
                 "Concert Scheduled", JOptionPane.INFORMATION_MESSAGE);
 
 
+    }
+
+    public static void updateConcert(ArrayList<Concerts> allConcerts) {
+
+        ArrayList<Concerts> foundConcerts = new ArrayList<Concerts>();
+        String searchKey = JOptionPane.showInputDialog("Please enter the venue of the Concert you would like to remove");
+
+        for (Concerts all : allConcerts)
+            if (all.getVenue().toLowerCase().contains(searchKey.toLowerCase()))
+                foundConcerts.add(all);
+
+        String text = "";
+
+        for (Concerts all : foundConcerts)
+            if (all != null) {
+                text += all + "\n";
+            }
+
+        int searchID = Integer.parseInt(JOptionPane.showInputDialog("The following concerts matched your search\n\n" + text +
+                "\n\nPlease enter the ID of the one you want to update"));
+
+        Concerts concertsToRemove = null;
+
+        for (Concerts all : foundConcerts)
+            if (all != null && all.getConcertID() == searchID)
+                concertsToRemove = all;
+
+        int removeChoice = JOptionPane.showConfirmDialog(null, "The details of the concert you would like to update are are:\n\n" +
+                concertsToRemove + "\n\nAre you sure you wish to update this concert?", "Concert Update Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (removeChoice == JOptionPane.YES_OPTION) {
+            allConcerts.remove(concertsToRemove);
+
+            int ConcertID = Integer.parseInt(JOptionPane.showInputDialog("Please enter the Concert ID"));
+            String ArtistName = JOptionPane.showInputDialog("Please enter the Performer name");
+            String Venue = JOptionPane.showInputDialog("Please enter the Venue name");
+
+            Concerts c = new Concerts(ConcertID, ArtistName, Venue);
+
+            allConcerts.add(c);
+            JOptionPane.showMessageDialog(null, "Concert now added to array list!",
+                    "Concert Scheduled", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public static void cancelConcert(ArrayList<Concerts> allConcerts) {
@@ -430,17 +505,18 @@ public class MainPage extends JFrame implements ActionListener {
 
         if (e.getActionCommand().equals("Add Performer"))
             addPerformers();
-        if (e.getActionCommand().equals("Update Performer"));
-
+        if (e.getActionCommand().equals("Update Performer"))
+            updatePerformer(allPerformers);
         if (e.getActionCommand().equals("Remove Performer"))
             removePerformer(allPerformers);
-
         if (e.getActionCommand().equals("View Performer"))
             viewPerformers(allPerformers);
 
         // Concert Functions
         if (e.getActionCommand().equals("Schedule Concert"))
             scheduleConcert();
+        if (e.getActionCommand().equals("Update Concert"))
+            updateConcert(allConcerts);
         if (e.getActionCommand().equals("View Concert"))
             viewConcerts(allConcerts);
         if (e.getActionCommand().equals("Cancel Concert"))

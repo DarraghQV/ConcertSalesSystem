@@ -13,17 +13,18 @@ public class Login extends JFrame {
 
     private JTextField NameField;
     private JPasswordField passwordField;
+
     private JButton loginButton;
 	private JLabel Password;
     private JLabel Name;
     private JLabel Title;
-    private JLabel Icon;
+    private JLabel LoginDetails;
     private JPanel loginPanel;
-	private JLabel validationLabel;
+    private JButton exitButton;
 
-	private String username = "Billy";
+    private String username = "Darragh";
 
-	private char[] correctPassword = { '1', '2', '3', '4', '5', '6', '7' };
+	private char[] correctPassword = { 'T', '0', '0', '2', '2', '6', '2','6','0' };
 
 
 	public Login() {
@@ -34,7 +35,6 @@ public class Login extends JFrame {
         setSize(400, 300);
         setLocationRelativeTo(null);
         setResizable(false);
-        boolean Valid = false;
 
         loginButton.addActionListener(new ActionListener() {
 
@@ -46,9 +46,9 @@ public class Login extends JFrame {
 						    if (Arrays.equals(input, correctPassword)) {
 									JOptionPane.showMessageDialog(null, "Successfully logged in!");
 						MainPage main = new MainPage();
-						setVisible(false);
+                                setVisible(false);
 
-						    }
+                            }
 						    else {
 							       JOptionPane.showMessageDialog(null, "Password is incorrect!");
 							    }
@@ -59,9 +59,20 @@ public class Login extends JFrame {
 				    }
    });
 
-        }
+        exitButton.addActionListener(new ActionListener() {
 
+            public void actionPerformed(ActionEvent e) {
+                {
+                    JOptionPane.showMessageDialog(null, "System shutting down...");
+                    System.exit(0);
+
+                }
+            }
+        });
     }
+}
+
+
 
 
 
